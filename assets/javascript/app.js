@@ -61,10 +61,9 @@ var rps = {
             // $(".playerOne").append(snapshot.val().commenter + ": " + snapshot.val().comment + "<br>");
 
             var cont = `
-                <div class="container">
-                    <div class="col-lg-6" style="height: 25px">
-                        <p> ${snapshot.val().commenter} : ${snapshot.val().comment} </p>
-                        <br>
+                <div class="row">
+                    <div class="col-lg-12">
+                         ${snapshot.val().commenter} : ${snapshot.val().comment}
                     </div>
                 </div>
             `;
