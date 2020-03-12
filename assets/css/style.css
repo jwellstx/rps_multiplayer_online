@@ -7,3 +7,17 @@ body {
     border: 5px solid green;
     max-height: 200px;
 }
+
+.login {
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+h1 {
+    font-size: 400%;
+    text-align: center;
+}
+
+.col-lg-6 {
+    text-align: center;
+}
