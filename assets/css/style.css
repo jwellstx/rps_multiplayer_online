@@ -4,7 +4,7 @@ body {
     text-align: center;
 }
 
-.testing {
+.commentSection {
     border: 5px solid green;
     max-height: 200px;
 }
@@ -16,4 +16,21 @@ body {
 
 h1 {
     font-size: 400%;
+}
+
+#p1buttons input,
+#p2buttons input {
+    width: 25%;
+    height: 50%;
+}
+
+.p1,
+.p2 {
+    border: 5px solid grey;
+    border-radius: 20px;
+    padding: 2%
+}
+
+.cSection {
+    text-align: left;
 }

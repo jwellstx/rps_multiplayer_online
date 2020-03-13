@@ -26,6 +26,7 @@
     <!-- Firebase libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 </head>
 
 <body>
@@ -38,42 +39,45 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 p1login">
-                <label id="player1Label" for="player1Name">Player1 Name: </label>
-                <input id="player1Name" type="text" value="Player 1 Name" onfocus="this.value=''">
-                <input id="player1Submit" type="submit" value="Submit">
-            </div>
-            <div class="col-lg-6 p2login">
-                <label id="player2Label" for="player2Name">Player2 Name: </label>
-                <input id="player2Name" type="text" value="Player 2 Name" onfocus="this.value=''">
-                <input id="player2Submit" type="submit" value="Submit">
-            </div>
-        </div>
-        <div class="row">
             <div class="col-lg-6 p1selected"></div>
             <div class="col-lg-6 p2selected"></div>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-5 p1">
+                <div class="p1login">
+                    <label id="player1Label" for="player1Name">Player1 Name: </label>
+                    <input id="player1Name" type="text" value="Player 1 Name" onfocus="this.value=''">
+                    <input id="player1Submit" type="submit" value="Submit">
+                </div>
+
                 <h1 id="p1Name">Player1</h1>
                 <br>
                 <div id="p1buttons">
-                    <button class="p1sel" value="r" type="submit">Rock</button>
-                    <button class="p1sel" value="p" type="submit">Paper</button>
-                    <button class="p1sel" value="s" type="submit">Scissor</button>
+                    <input type="image" src="assets/images/rock.png" class="p1sel" value="r">
+                    <input type="image" src="assets/images/paper.png" class="p1sel" value="p">
+                    <input type="image" src="assets/images/scissors.png" class="p1sel" value="s">
                 </div>
                 <br>
                 <div>
                     Wins: <span id="p1wins">0</span> Losses: <span id="p1losses">0</span>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-2 ties">
+                Ties: <span id="numOfTies">0</span>
+            </div>
+            <div class="col-lg-5 p2">
+                <div class="p2login">
+                    <label id="player2Label" for="player2Name">Player2 Name: </label>
+                    <input id="player2Name" type="text" value="Player 2 Name" onfocus="this.value=''">
+                    <input id="player2Submit" type="submit" value="Submit">
+                </div>
+
                 <h1 id="p2Name">Player2</h1>
                 <br>
                 <div id="p2buttons">
-                    <button class="p2sel" value="r" type="submit">Rock</button>
-                    <button class="p2sel" value="p" type="submit">Paper</button>
-                    <button class="p2sel" value="s" type="submit">Scissor</button>
+                    <input type="image" src="assets/images/rock.png" class="p2sel" value="r">
+                    <input type="image" src="assets/images/paper.png" class="p2sel" value="p">
+                    <input type="image" src="assets/images/scissors.png" class="p2sel" value="s">
                 </div>
                 <br>
                 <div>
@@ -82,9 +86,9 @@
             </div>
         </div>
         <br><br><br>
-        <div class="row">
+        <div class="row cSection">
             <div class="col-lg-12">
-                <div class="container testing overflow-auto"></div>
+                <div class="container commentSection overflow-auto"></div>
                 <div class="form-group spec">
                     <label for="comment">Comments</label>
                     <textarea class="form-control" id="comment" rows="3"></textarea>
@@ -93,42 +97,6 @@
             </div>
         </div>
     </div>
-
-
-    <!-- <div class="col-lg-10 login">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label id="playerEntry" for="username" class="col-lg-2">Player Name: </label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="username">
-                        </div>
-                    </div>
-                    <button type="submit" id="submitBtn">Submit</button>
-                </form>
-            </div>
-            <div class="col-lg-2" id="whoami"></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="container testing overflow-auto"></div>
-                <div class="form-group">
-                    <label for="comment">Comments</label>
-                    <textarea class="form-control" id="comment" rows="3"></textarea>
-                </div>
-                <button type="submit" id="submitCmt">Submit</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 playerOne"></div>
-            <div class="col-lg-6 playerTwo">Players Connected to Chat<br></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 playerOne1">Player 1 guesses<br></div>
-            <div class="col-lg-6 playerTwo2">Player 2 guesses<br></div>
-        </div>
-    </div> -->
-
-
 
     <script src="assets/javascript/app.js"></script>
 </body>

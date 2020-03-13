@@ -59,7 +59,7 @@ var rps = {
         $("#player1Submit").on("click", function () {
             rps.player = $("#player1Name").val().trim();
             rps.playerNumber = "player1";
-            $(".p2login, .p2sel").remove();
+            $(".p2login, #p2buttons").hide();
 
             db.ref("users/player1").set({
                 name: rps.player,
@@ -70,11 +70,11 @@ var rps = {
         $("#player2Submit").on("click", function () {
             rps.player = $("#player2Name").val().trim();
             rps.playerNumber = "player2";
-            $(".p1login, .p1sel").remove();
+            $(".p1login, #p1buttons").hide();
 
             db.ref("users/player2").set({
                 name: rps.player,
-                present: true
+                present: true,
             });
         });
 
@@ -119,9 +119,12 @@ var rps = {
             if (rps.player) {
                 e.preventDefault();
                 var comment = $("#comment").val().trim();
+                var time = moment().format("MM/DD/YYYY h:m a");
+                // var time = moment().format("h:m a");
                 db.ref("messages").push({
                     commenter: rps.player,
-                    comment: comment
+                    comment: comment,
+                    time: time
                 });
                 $("#comment").val("");
             }
@@ -147,12 +150,12 @@ var rps = {
             var cont = `
                         <div class="row">
                             <div class="col-lg-12">
-                                 ${snapshot.val().commenter} : ${snapshot.val().comment}
+                                 [${snapshot.val().time}] ${snapshot.val().commenter}: ${snapshot.val().comment}
                             </div>
                         </div>
                     `;
-            $(".testing").append(cont);
-            $(".testing").scrollTop($(".testing")[0].scrollHeight);  // scroll to bottom of text box on page refresh
+            $(".commentSection").append(cont);
+            $(".commentSection").scrollTop($(".commentSection")[0].scrollHeight);  // scroll to bottom of text box on page refresh
 
         });
     },
@@ -168,32 +171,6 @@ var rps = {
             }
         });
 
-        // if left, tell the game we need to reset
-        // window.onunload = function () {
-        //     if (rps.playerNumber) {
-        //         db.ref("reset").update({
-        //             state: true,
-        //             dcplayer: rps.playerNumber,
-        //         });
-        //     }
-        // }
-
-        // db.ref("reset").on("value", snapshot => {
-        //     var reset = snapshot.val();
-        //     if (reset.state) {
-        //         db.ref().set(null);
-        //         if (rps.playerNumber !== reset.dcplayer) {
-        //             location.reload();
-        //         }
-        //         db.ref("reset").update({
-        //             state: false,
-        //             dcplayer: ""
-        //         });
-
-        //         alert("The other player has left the game!");
-        //     }
-        // });
-
         db.ref("game").on("value", snapshot => {
             var dbRef = snapshot.val();
 
@@ -201,12 +178,16 @@ var rps = {
             $("#p1losses").text(dbRef.player1loss);
             $("#p2wins").text(dbRef.player2wins);
             $("#p2losses").text(dbRef.player2loss);
+            $("#numOfTies").text(dbRef.ties);
         });
 
         $(".p1sel").on("click", function () {
             console.log(picked, $(this).val());
             if (!picked) {
                 console.log(rps.playerNumber);
+                $(this).css({
+                    "background-color": "red"
+                });
                 db.ref("choices/" + rps.playerNumber).update({
                     choice: $(this).val()
                 });
@@ -217,6 +198,9 @@ var rps = {
             console.log(picked, $(this).val());
             if (!picked) {
                 console.log(rps.playerNumber);
+                $(this).css({
+                    "background-color": "red"
+                });
                 db.ref("choices/" + rps.playerNumber).update({
                     choice: $(this).val()
                 });
@@ -259,192 +243,30 @@ var rps = {
                             alert("Not a valid entry");  // shouldnt ever hit this
                     }
 
-                }).then(function () { picked = false; });
-                db.ref("choices/player1/choice").set(null);
-                db.ref("choices/player2/choice").set(null);
+                }).then(function () {
+                    $("#p1buttons, #p2buttons").show();
+                    $("#p1buttons input[value='" + dbRef.player1.choice + "'], #p2buttons input[value='" + dbRef.player2.choice + "']").css("background-color", "red");
+                    new Promise(resolve => setTimeout(resolve, 5000)).then(() => {
+                        picked = false;
+                        db.ref("choices/player1/choice").set(null);
+                        db.ref("choices/player2/choice").set(null);
+                        $(".p1sel, .p2sel").css({
+                            "background-color": "black"
+                        });
+                        if (rps.playerNumber === "player1") { $("#p2buttons").hide(); }
+                        if (rps.playerNumber === "player2") { $("#p1buttons").hide(); }
+                    });
+
+                });
+
             }
         });
-    }
+    },
+    results: function () {
+
+    },
 }
 
 $(function () {
-    // to empty firebase db.ref("/").set(null);
     rps.Start();
 });
-
-
-
-
-//////////////////////////////////////////////// UGH ////////////////////////////////////////////////////////
-
-
-// $(".p2login").hide();
-//         // Initialize Firebase
-//         firebase.initializeApp(this.firebaseConfig);
-//         var dB = firebase.database();
-
-//         $("#player1Submit").on("click", e => {
-//             e.preventDefault();
-//             rps.player = $("#player1Name").val().trim();
-
-
-//             dB.ref().once("value", snapshot => {
-//                 var gameDB = snapshot.val();
-
-//                 if (gameDB === null) {
-//                     console.log("i'm player1");
-//                     dB.ref("users/player1").set({
-//                         name: rps.player,
-//                         present: true
-//                     });
-//                     $(".p1login").hide();
-//                     $("#status").html("Waiting on player2!");
-//                     rps.player = "player1";
-//                 }
-//             });
-//         });
-
-//         dB.ref("users").on("value", snapshot => {
-//             var gameDB = snapshot.val();
-//             if (gameDB !== null && gameDB.users.player1.present) {
-//                 $(".p2login").show();
-//                 $("#player2Submit").on("click", e => {
-//                     console.log("i'm player 2");
-//                     dB.ref("users/player2").update({
-//                         name: rps.player,
-//                         present: true
-//                     });
-//                     $(".p2login").hide();
-//                     rps.player = "player2";
-//                 });
-//             }
-//         });
-
-
-
-
-////////////////////////////////////////////// WORKING CHAT ////////////////////////////////////////////////
-
-// Start: function () {
-//     // Initialize Firebase
-//     firebase.initializeApp(this.firebaseConfig);
-//     var dB = firebase.database();
-
-//     if (localStorage.getItem("RPSusername") === null) {
-//         $("#submitBtn").on("click", e => {
-//             e.preventDefault();
-//             rps.name = $("#username").val().trim();
-//             $("#whoami").html(rps.name);
-//             rps.name = rps.name.toLowerCase();
-//             // rps.pwd = $("#pwd").val().trim();
-//             dB.ref("users/" + rps.name).set({
-//                 name: rps.name,
-//                 // password: rps.pwd
-//             });
-//             // localStorage.setItem("RPSusername", rps.name);
-//             $(".login").empty();
-//         });
-//     }
-//     else {
-//         rps.name = localStorage.getItem("RPSusername");
-//         $("#whoami").html("Logged in as: " + rps.name);
-//         $(".login").remove();
-//     }
-//     $("#whoami").html(rps.name);
-
-//     $("#submitCmt").on("click", e => {
-//         if (rps.name) {
-//             e.preventDefault();
-//             var comment = $("#comment").val().trim();
-//             dB.ref("messages").push({
-//                 commenter: rps.name,
-//                 comment: comment
-//             });
-//             $("#comment").val("");
-//         }
-//     });
-
-//     $(document).on("keyup", "#comment", function (event) {
-//         if (event.key !== "Enter") return;
-//         $('#submitCmt').click();
-//         event.preventDefault();
-//     });
-
-//     dB.ref("messages").on("child_added", snapshot => {
-//         // $(".playerOne").append(snapshot.val().commenter + ": " + snapshot.val().comment + "<br>");
-
-//         var cont = `
-//             <div class="row">
-//                 <div class="col-lg-12">
-//                      ${snapshot.val().commenter} : ${snapshot.val().comment}
-//                 </div>
-//             </div>
-//         `;
-//         $(".testing").append(cont);
-//         $(".testing").scrollTop($(".testing")[0].scrollHeight);  // scroll to bottom of text box on page refresh
-
-//     });
-
-//     dB.ref("users").on("child_added", snapshot => {
-//         $(".playerTwo").append(snapshot.val().name + "<br>");
-//     });
-
-// },
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        // if (localStorage.getItem("RPSusername") === null) {
-        //     $('#submitBtn').on("click", e => {
-        //         e.preventDefault();
-        //         this.login(dB);
-        //     });
-        // }
-        // else {
-        //     console.log("user logged in");
-        //     $('.login').empty();
-        //     this.name = localStorage.getItem("RPSusername");
-        //     console.log(this.name);
-        // }
-
-
-
-        // dB.ref().on("child_added", snapshot => {
-        //     console.log(snapshot.val().Justin);
-        //     $("#userthis.name").append(snapshot.val());
-        // });
-    // },
-
-    // login: (dB) => {
-        // if (localStorage.getItem("RPSusername") === null) {
-            // $('#submitBtn').on("click", e => {
-                // e.preventDefault();
-                // this.name = $("#username").val().trim();
-                // var pwd = $("#pwd").val().trim();
-                // dB.ref().child('users').once('value', function (snapshot) {
-                //     if (snapshot.child(this.name).exists()) {
-                //         console.log(snapshot);
-                //         alert("Username already exists, Please try another one!");
-                //         $("#submitBtn").unclick();
-                //         rps.login(dB);
-                //     }
-                //     else {
-                //         console.log(this.name + " " + pwd);
-                //         alert("Your password was set to: " + pwd);
-                //         localStorage.setItem("RPSusername", this.name);
-
-                //         dB.ref("users/" + this.name).set({
-                //             password: pwd
-                //         });
-                //     }
-                // });
-            // });
-        // }
-        // else {
-        //     console.log("user logged in");
-        //     $('.login').empty();
-        //     this.name = localStorage.getItem("RPSusername");
-        //     console.log(this.name);
-        // }
