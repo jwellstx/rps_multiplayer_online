@@ -1,6 +1,7 @@
 body { 
     background-color: black;
     color: white;
+    text-align: center;
 }
 
 .testing {
@@ -15,9 +16,4 @@ body {
 
 h1 {
     font-size: 400%;
-    text-align: center;
-}
-
-.col-lg-6 {
-    text-align: center;
 }

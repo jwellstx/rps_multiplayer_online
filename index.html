@@ -40,12 +40,12 @@
         <div class="row">
             <div class="col-lg-6 p1login">
                 <label id="player1Label" for="player1Name">Player1 Name: </label>
-                <input id="player1Name" type="text" value="Player1 Names" onfocus="this.value=''">
+                <input id="player1Name" type="text" value="Player 1 Name" onfocus="this.value=''">
                 <input id="player1Submit" type="submit" value="Submit">
             </div>
             <div class="col-lg-6 p2login">
-                <label id="player1Label" for="player2Name">Player2 Name: </label>
-                <input id="player2Name" type="text" value="New Search" onfocus="this.value=''">
+                <label id="player2Label" for="player2Name">Player2 Name: </label>
+                <input id="player2Name" type="text" value="Player 2 Name" onfocus="this.value=''">
                 <input id="player2Submit" type="submit" value="Submit">
             </div>
         </div>
@@ -55,26 +55,41 @@
         </div>
         <div class="row">
             <div class="col-lg-6">
-                <h1>Player1</h1>
-                <button class="p1sel" value="r" type="submit">Rock</button>
-                <button class="p1sel" value="p" type="submit">Paper</button>
-                <button class="p1sel" value="s" type="submit">Scissor</button>
+                <h1 id="p1Name">Player1</h1>
+                <br>
+                <div id="p1buttons">
+                    <button class="p1sel" value="r" type="submit">Rock</button>
+                    <button class="p1sel" value="p" type="submit">Paper</button>
+                    <button class="p1sel" value="s" type="submit">Scissor</button>
+                </div>
+                <br>
+                <div>
+                    Wins: <span id="p1wins">0</span> Losses: <span id="p1losses">0</span>
+                </div>
             </div>
             <div class="col-lg-6">
-                <h1>Player2</h1>
-                <button class="p2sel" value="r" type="submit">Rock</button>
-                <button class="p2sel" value="p" type="submit">Paper</button>
-                <button class="p2sel" value="s" type="submit">Scissor</button>
+                <h1 id="p2Name">Player2</h1>
+                <br>
+                <div id="p2buttons">
+                    <button class="p2sel" value="r" type="submit">Rock</button>
+                    <button class="p2sel" value="p" type="submit">Paper</button>
+                    <button class="p2sel" value="s" type="submit">Scissor</button>
+                </div>
+                <br>
+                <div>
+                    Wins: <span id="p2wins">0</span> Losses: <span id="p2losses">0</span>
+                </div>
             </div>
         </div>
+        <br><br><br>
         <div class="row">
             <div class="col-lg-12">
                 <div class="container testing overflow-auto"></div>
-                <div class="form-group">
+                <div class="form-group spec">
                     <label for="comment">Comments</label>
                     <textarea class="form-control" id="comment" rows="3"></textarea>
                 </div>
-                <button type="submit" id="submitCmt">Submit</button>
+                <button class="spec" type="submit" id="submitCmt">Submit</button>
             </div>
         </div>
     </div>
