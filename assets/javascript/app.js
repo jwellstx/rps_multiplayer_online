@@ -8,7 +8,6 @@ var rps = {
     player: 0,
     playerNumber: "",
     selectedMove: false,
-    gameInProgress: false,
 
     // Your web app's Firebase configuration
     firebaseConfig: {
@@ -33,8 +32,14 @@ var rps = {
 
         db.ref("reset").on("value", snapshot => {
             var reset = snapshot.val();
-            if (reset.state) {
+            if (reset !== null && reset.state) {
                 db.ref().set(null);
+                db.ref().update({
+                    reset: {
+                        state: false,
+                        dcplayer: ""
+                    }
+                });
                 if (rps.playerNumber !== reset.dcplayer) {
                     location.reload();
                 }
@@ -52,7 +57,6 @@ var rps = {
             console.log(snapshot, dbRef);
             if (snapshot.child("player1").exists() && snapshot.child("player2").exists() && dbRef !== null) {
                 $("#p1buttons, #p2buttons, .spec").hide();
-                rps.gameInProgress = true;
             }
         });
 
@@ -107,10 +111,7 @@ var rps = {
             if (snapshot.child("player1").exists() && snapshot.child("player2").exists()) {
                 $(".p1selected, .p2selected").remove();
                 console.log("we are ready to play!!");
-                console.log(rps.gameInProgress);
-                if (!rps.gameInProgress) {
-                    rps.StartGame(db);
-                }
+                rps.StartGame(db);
             }
         });
 
