@@ -6,7 +6,7 @@ body {
 
 .commentSection {
     border: 5px solid green;
-    max-height: 200px;
+    height: 75%;
 }
 
 .login {
@@ -33,4 +33,11 @@ h1 {
 
 .cSection {
     text-align: left;
+    margin-bottom: 25%;
+}
+
+.scores,
+.ties {
+    font-weight: bold;
+    font-size: 200%;
 }
