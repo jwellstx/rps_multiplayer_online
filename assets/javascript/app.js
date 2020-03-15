@@ -33,9 +33,13 @@ var rps = {
             }
         });
 
+        // Resets game if player leaves
         this.reset(db);
+        // setups up listeners for player submit buttons
         this.setupPlayerSubmitButtons(db);
+        // checks if both players are present and starts the RPS game
         this.checkForPlayersAndStartGame(db);
+        // enables listeners for chat
         this.enableChat(db);
     },
     reset: function (db) {
