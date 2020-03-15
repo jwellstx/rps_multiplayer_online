@@ -1,12 +1,15 @@
 body { 
-    background-color: black;
-    color: white;
+    background-color: #E95C20FF;
+    color: #4F2C1DFF;
     text-align: center;
+    font-family: 'Amatic SC', 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 120%;
 }
 
 .commentSection {
-    border: 5px solid green;
-    height: 75%;
+    border: 5px solid #4F2C1DFF;
+    height: 150px;
 }
 
 .login {
@@ -26,7 +29,7 @@ h1 {
 
 .p1,
 .p2 {
-    border: 5px solid grey;
+    border: 5px solid #4F2C1DFF;
     border-radius: 20px;
     padding: 2%
 }
