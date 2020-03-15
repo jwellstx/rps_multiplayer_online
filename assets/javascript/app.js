@@ -122,7 +122,6 @@ var rps = {
     enableChat: function (db) {
         // when comment is submitted, upload it to DB and display on both players page
         $("#submitCmt").on("click", e => {
-            console.log(rps.player);
             if (rps.player) {
                 e.preventDefault();
                 var comment = $("#comment").val().trim();
@@ -174,7 +173,6 @@ var rps = {
                 $(".spec").hide();
                 rps.validPlayer = false;
             }
-            console.log(rps.validPlayer);
         }).then(function () {
 
             // Create our listener if we decided we are a valid player and not a spectator
